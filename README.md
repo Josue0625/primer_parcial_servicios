@@ -4,12 +4,17 @@
 
 Se realizó el examen final de la materia de arquitectura orientada a servicio
 
+## Nota
+
+Para correr el back, se debe instalar los cors, con el comando <code>npm install cors</code> 
+
 ## Tabla de contenido
 - [Back](#BackEnd)
 - [Estructura del Back](#Estructura-del-Back)
 - [API Endpoints](#API-Endpoints)
 - [FrontEnd](#FrontEnd)
 - [Estructura del Front](#Estructura-del-Front)
+- [Información general del parcial](#información-general-del-parcial)
 
 ## BackEnd
 
