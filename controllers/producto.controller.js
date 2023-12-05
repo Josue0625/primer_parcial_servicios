@@ -1,5 +1,5 @@
 import { delteProductoModel, getProductoModel,getProductoUnicoModel , postProductoModel, putProductoModel, getCountAll  } from "../models/producto.model.js";
-import { saveImage } from "../middlewares/file.middleware.js";
+// import { saveImage } from "../middlewares/file.middleware.js";
  
 export const getAll = async (req, res) =>{
     try{
@@ -31,8 +31,8 @@ export async function getProducto (req, res){
 
 export async function postProducto (req, res){ 
     try{
-        const {nombre, detalle, valor, img } = req.body;  
-        const data =  await postProductoModel(nombre, detalle, valor, img );     
+        const {title, price, description, category, images} = req.body;  
+        const data =  await postProductoModel(title, price, description, category, images);     
         res.status(201).json({success: true, data: data ,   msg : 'Acción realizada con exito' })
     }catch(e){
         res.status(500).json({data: [],msg: 'Servicio no disponible, Por favor intente mas tarde',success: false});
@@ -43,13 +43,13 @@ export async function postProducto (req, res){
 export async function putProducto (req, res){
     try{
         let update = {};
-        const { id_producto, nombre, detalle, valor, img } = req.body;
-        update = await getProductoUnicoModel(id_producto);  
+        const { id, title, price, description, category, images } = req.body;
+        update = await getProductoUnicoModel(id);  
         if(!update){
             return res.status(200).json({success: true, data: [] ,   msg :'El dato no existe, no pued ser actualizado'})
         }
-        const data = await putProductoModel(id_producto, nombre, detalle, valor , img ); 
-        update = await getProductoUnicoModel(id_producto);  
+        const data = await putProductoModel( id, title, price, description, category, images ); 
+        update = await getProductoUnicoModel(id);  
         res.status(201).json({success: true, data:update ,   msg : data})
 
     }catch(e){

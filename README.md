@@ -1,16 +1,19 @@
-# Primer Parcial 2023 Arquitectura Orientada a Servicios
+# Examen Final 2023 Arquitectura Orientada a Servicios
 
 ## Descripción 
 
-Se realizó el primer parcial de la materia de arquitectura orientada a servicio
+Se realizó el examen final de la materia de arquitectura orientada a servicio
 
 ## Tabla de contenido
-
-- [Estructura del Proyecto](#Estructura-del-Proyecto)
+- [Back](#BackEnd)
+- [Estructura del Back](#Estructura-del-Back)
 - [API Endpoints](#API-Endpoints)
+- [FrontEnd](#FrontEnd)
+- [Estructura del Front](#Estructura-del-Front)
 
+## BackEnd
 
-## Estructura del Proyecto
+## Estructura del Back
 
 ```
 src\
@@ -88,3 +91,36 @@ src\
     - **data :** array
     - **msg :** string 
     - **success :** boolean
+
+## FrontEnd
+
+## Estructura del Front
+
+
+```
+src\
+ |--app\             # logica de la aplicación
+    |--guards\       # guardianes de rutas de la aplicación
+    |--home\         # se guardó el formulario y la pagina de auth
+        |--components\
+            |--form\
+        |--pages\
+            |--auth\
+    |--interceptor\  # manipular solicitudes y respuestas HTTP
+    |--product\      # front donde está el diseño del crud para el producto
+        |--components\
+            |--add-product\
+            |--get-all-products\
+            |--modal-delete\
+            |--modal-update\
+            |--modal\
+        |--pages\
+            |--product\
+    |--public\       # partes de la aplicación que se van a usar en cualquier lugar de la aplicación
+ |--assets\          # Imagenes del proyecto 
+
+```
+
+## Información general del parcial
+
+El front se encuentra de forma local. En cuanto al back end, se consideró la carga de la base de datos. La base de datos se incorporó en Azure y se gestionó mediante la conexión a DBeaver. Además, el api está trabajando de manera local.

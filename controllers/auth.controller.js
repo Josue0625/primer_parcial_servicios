@@ -10,6 +10,8 @@ export const login = async (req, res) =>{
         }
         res.status(200).json({
             token : generateToken(data),
+            name: data.name,
+            avatar: data.avatar,
             success: true, 
             data: "Logeado Correctamente" , 
             msg : "Logeado Correctamente"

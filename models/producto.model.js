@@ -1,10 +1,10 @@
 import pgService from "../services/pg.service.js";
 
-export const getProductoModel = async (page = null, limit =  'null' , order = 'nombre') => {
+export const getProductoModel = async (page = null, limit =  'null' , order = 'title') => {
     const pg =  new pgService();  
     return  await  pg.connection.query(`SELECT 
-        ID_PRODUCTO, NOMBRE, DETALLE , VALOR , IMG 
-        FROM PRODUCTO 
+        id, title, price , description , category, images 
+        FROM producto_serv
         ORDER BY $(order:raw)
         OFFSET $(page:raw) ROWS FETCH NEXT $(limit:raw) ROWS ONLY
         `, {
@@ -17,21 +17,21 @@ export const getProductoModel = async (page = null, limit =  'null' , order = 'n
 
 export const getCountAll = async ()  => {
     const pg =  new pgService();  
-    return  await  pg.connection.one(`SELECT COUNT(*) AS cantidad FROM PRODUCTO `);
+    return  await  pg.connection.one(`SELECT COUNT(*) AS cantidad FROM producto_serv `);
 }
 
 export const getProductoUnicoModel = async (id) => {
     const pg =  new pgService(); 
-    return  await  pg.connection.oneOrNone(`SELECT * FROM producto where ID_PRODUCTO =  $1`, [id]);
+    return  await  pg.connection.oneOrNone(`SELECT * FROM producto_serv where id =  $1`, [id]);
 }
-export const postProductoModel = async (nombre, detalle, valor, url ) => {
+export const postProductoModel = async (title, price, description, category, images) => {
     try{
         const pg =  new pgService(); 
-        let out = await  pg.connection.one(`INSERT INTO PRODUCTO 
-        (NOMBRE, DETALLE , VALOR , IMG)  
+        let out = await  pg.connection.one(`INSERT INTO producto_serv 
+        (title, price , description , category, images)  
         VALUES 
-        ($1, $2, $3 ,$4) RETURNING  * 
-        ` ,[nombre,detalle, valor ,url ]);
+        ($1, $2, $3, $4, $5) RETURNING  * 
+        ` ,[title, price, description, category, images ]);
         return  out;
     }catch(error){ 
         console.log(error);
@@ -39,16 +39,17 @@ export const postProductoModel = async (nombre, detalle, valor, url ) => {
     }
 }
 
-export const putProductoModel =  async (id, nombre, detalle, valor, url) => {
+export const putProductoModel =  async (id, title, price, description, category, images) => {
     try{
         const pg =  new pgService(); 
-        let temp = await pg.connection.none(`UPDATE PRODUCTO 
-        SET NOMBRE = $2,
-            DETALLE = $3,
-            VALOR = $4,
-            IMG = case $5 when null then IMG else $5 end 
-        WHERE ID_PRODUCTO  = $1
-        ` ,[id, nombre,detalle, valor, url]).then(res=>{
+        let temp = await pg.connection.none(`UPDATE producto_serv 
+        SET title = $2,
+            price = $3,
+            description = $4,
+            category= $5,
+            images = COALESCE($6, images)
+        WHERE id  = $1
+        ` ,[id, title, price, description, category, images]).then(res=>{
             console.log(res);
         });
         console.log(temp);
@@ -63,7 +64,7 @@ export const delteProductoModel = async (id) => {
     try{
         console.log(id);
         const pg =  new pgService(); 
-        pg.connection.none(`DELETE FROM PRODUCTO WHERE ID_PRODUCTO = $1` ,[id]);
+        pg.connection.none(`DELETE FROM producto_serv WHERE id = $1` ,[id]);
         return  'Transacción realizada';
     }catch(error){ 
         return 'En este momento no se puede realizar su transacción';

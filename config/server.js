@@ -1,6 +1,7 @@
 
 /** Importación type: Module / ES */
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser'; 
 import { exports } from "./default.js";
 import router from "../routes/index.route.js";
@@ -11,6 +12,23 @@ export default class Server{
     constructor(){
         this.app = express();
         this.port = exports.port;
+        this.app.use(cors({
+            origin: (origin, callback) => {
+                const ACCEPTED_ORIGINS = [
+                    'http://localhost:4200'
+                ]
+
+                if(ACCEPTED_ORIGINS.includes(origin)){
+                    return callback(null, true)
+                }
+
+                if(!origin) {
+                    return callback(null, true)
+                }
+
+                return callback(new Error('Not allowed by CORS'))
+            }
+        }));
     }
 
     async connectionDB(){

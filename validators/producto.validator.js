@@ -14,7 +14,7 @@ export const getProductoAllValidator = checkSchema({
 
 
 export const postProductoValidator = checkSchema({
-    nombre: {
+    title: {
       errorMessage: 'Nombre invalido',
       notEmpty: true,
       isLength: {
@@ -22,9 +22,9 @@ export const postProductoValidator = checkSchema({
         errorMessage: 'El nombre debe tener minimo un caracteres',
       },
     },
-    valor: {
-      matches : { options : /^[0-9]+$/},
-      errorMessage: 'la cantidad debe ser un múmero'
+    price: {
+      matches : { options : /^[0-9]+(\.[0-9]+)?$/},
+      errorMessage: 'El precio debe ser un múmero'
     }
 } ,["body"]);
 
