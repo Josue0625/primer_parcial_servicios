@@ -2,7 +2,7 @@
 
 ## Descripción 
 
-Se realizó el examen final de la materia de arquitectura orientada a servicio
+Se realizó el examen final de la materia de arquitectura orientada a servicios
 
 ## Nota
 
